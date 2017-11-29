@@ -7,12 +7,17 @@ Pandas[col][row]
 '''
 
 import pandas as pd
+
 import matplotlib.pyplot as plt
 data = pd.read_csv("scraped_data.txt",header=None, delimiter=" ")
 
 timeplot = []
 scoreplot = []
 
-plt.hist(data[2])
+
+plt.hist(data[0],bins=100)
+plt.xlabel('score')
+plt.title('histogram of net votes')
+plt.show()
 
 

@@ -85,19 +85,21 @@ for subred in topreddits:
 
 
 	#5 for test, 75 for 3 pages
-	for submission in reddit.subreddit(subred).hot(limit=10):
-		#add subreddit
-		subred_name.append(subred)
-		#add number online
-		users_online.append(time_str)
-		#add title to array
-		#post_title.append(submission.title)
-		#add time since posted
-		post_made.append(get_time_since_posted(submission))
-		#add net votes 
-		net_votes.append(submission.score)
-		#add percent upvotes
-		up_ratio.append(submission.upvote_ratio)
+	for submission in reddit.subreddit(subred).hot(limit=75):
+		if (not submission.stickied):
+			#add subreddit
+			subred_name.append(subred)
+			#add number online
+			users_online.append(time_str)
+			#add title to array
+			#post_title.append(submission.title)
+			#add time since posted
+			post_made.append(get_time_since_posted(submission))
+			#add net votes 
+			net_votes.append(submission.score)
+			#add percent upvotes
+			up_ratio.append(submission.upvote_ratio)
+
 
 df = pd.DataFrame(scraped_data)
 df.to_csv(r'scraped_data.txt', header=None, index=None, sep=' ', mode='a')

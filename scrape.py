@@ -86,7 +86,7 @@ for subred in topreddits:
 
 
 	#5 for test, 75 for 3 pages
-	for submission in reddit.subreddit(subred).hot(limit=75):
+	for submission in reddit.subreddit(subred).hot(limit=25):
 		if (not submission.stickied):
 			#add subreddit
 			subred_name.append(subred)
@@ -107,7 +107,9 @@ df = pd.DataFrame(scraped_data)
 #add some new columns to find the number of upvotes and number of downvotes
 df['num_upvotes'] = df['net_votes']*df['up_ratio']
 df['num_downvotes'] = df['net_votes']-df['num_upvotes']
-
+df['num_upvotes/users_online'] = df['num_upvotes']/df['users_online']
+df['num_downvotes/users_online'] = df['num_downvotes']/df['users_online']
+ 
 #export to a csv file
 filename = 'scraped_data_' + time.ctime() + '.txt'
 save_path = os.path.join(os.getcwd(),'Scraped Data', filename)

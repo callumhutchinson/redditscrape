@@ -6,6 +6,7 @@ import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import time,sys
+import os
 
 #lists to store data
 subred_name = []
@@ -101,8 +102,18 @@ for subred in topreddits:
 			up_ratio.append(submission.upvote_ratio)
 
 
+#convert dictionary to dataframe
 df = pd.DataFrame(scraped_data)
-df.to_csv(r'scraped_data.txt', header=None, index=None, sep=' ', mode='a')
+#add some new columns to find the number of upvotes and number of downvotes
+df['num_upvotes'] = df['net_votes']*df['up_ratio']
+df['num_downvotes'] = df['net_votes']-df['num_upvotes']
+
+#export to a csv file
+filename = 'scraped_data_' + time.ctime() + '.txt'
+save_path = os.path.join(os.getcwd(),'Scraped Data', filename)
+file = open(save_path,"w")
+df.to_csv(file, index=None, sep=' ', mode='a')
+file.close()
 
 print "Data saved to file scraped_data.txt in the format:"
 print "\n"
